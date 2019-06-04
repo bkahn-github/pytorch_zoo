@@ -1,6 +1,7 @@
 import os
 import random
 import pickle
+import requests
 
 import numpy as np
 
@@ -22,6 +23,17 @@ def seed_environment(seed):
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
 
+
+def notify(obj, key):
+    """Send a notification to your phone with IFTTT
+
+    Setup a IFTTT webhook with https://medium.com/datadriveninvestor/monitor-progress-of-your-training-remotely-f9404d71b720
+    
+    Args:
+        obj (Object): Object to send to IFTTT
+        key ([type]): IFTTT webhook key
+    """
+    requests.post(f'https://maker.ifttt.com/trigger/notify/with/key/{key}', data=obj)
 
 def save_model(model, fold):
     """Save a trained pytorch model on a particular cross-validation fold to disk. 
