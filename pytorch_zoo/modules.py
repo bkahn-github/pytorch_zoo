@@ -2,10 +2,24 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# from https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/65939
-class ChannelSqueezeAndExcitation(nn.Module):
-    def __init__(self, in_ch, r):
-        super(ChannelSqueezeAndExcitation, self).__init__()
+
+class SqueezeAndExcitation(nn.Module):
+    """The channel-wise SE (Squeeze and Excitation) block from the [Squeeze-and-Excitation Networks](https://arxiv.org/abs/1709.01507) paper.
+
+    Implementation adapted from https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/65939 and https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/66178
+    
+    Args:
+        in_ch (int): The number of channels in the feature map of the input.
+        r (int): The reduction ratio of the intermidiate channels.
+                Default: 16.
+
+    Shape:
+        - Input: (batch, channels, height, width)
+        - Output: (batch, channels, height, width) (same shape as input)
+    """
+
+    def __init__(self, in_ch, r=16):
+        super(SqueezeAndExcitation, self).__init__()
 
         self.linear_1 = nn.Linear(in_ch, in_ch // r)
         self.linear_2 = nn.Linear(in_ch // r, in_ch)
@@ -24,9 +38,22 @@ class ChannelSqueezeAndExcitation(nn.Module):
         return x
 
 
-class SpatialSqueezeAndExcitation(nn.Module):
+class ChannelSqueezeAndSpatialExcitation(nn.Module):
+    """The sSE (Channel Squeeze and Spatial Excitation) block from the 
+    [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
+
+    Implementation adapted from https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/66178
+    
+    Args:
+        in_ch (int): The number of channels in the feature map of the input.
+
+    Shape:
+        - Input: (batch, channels, height, width)
+        - Output: (batch, channels, height, width) (same shape as input)
+    """
+
     def __init__(self, in_ch):
-        super(SpatialSqueezeAndExcitation, self).__init__()
+        super(ChannelSqueezeAndSpatialExcitation, self).__init__()
 
         self.conv = nn.Conv2d(in_ch, 1, kernel_size=1, stride=1)
 
@@ -41,36 +68,52 @@ class SpatialSqueezeAndExcitation(nn.Module):
         return x
 
 
-class SpatialAndChannelSqueezeAndExcitation(nn.Module):
-    def __init__(self, in_ch, r):
-        super(SpatialAndChannelSqueezeAndExcitation, self).__init__()
+class ConcurrentSpatialAndChannelSqueezeAndChannelExcitation(nn.Module):
+    """The scSE (Concurrent Spatial and Channel Squeeze and Channel Excitation) block from the 
+    [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
+    
+    Implementation adapted from https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/66178
 
-        self.ChannelSqueezeAndExcitation = ChannelSqueezeAndExcitation(in_ch, r)
-        self.SpatialSqueezeAndExcitation = SpatialSqueezeAndExcitation(in_ch)
+    Args:
+        in_ch (int): The number of channels in the feature map of the input.
+        r (int): The reduction ratio of the intermidiate channels.
+                Default: 16.
+
+    Shape:
+        - Input: (batch, channels, height, width)
+        - Output: (batch, channels, height, width) (same shape as input)
+    """
+
+    def __init__(self, in_ch, r):
+        super(ConcurrentSpatialAndChannelSqueezeAndChannelExcitation, self).__init__()
+
+        self.SqueezeAndExcitation = SqueezeAndExcitation(in_ch, r)
+        self.ChannelSqueezeAndSpatialExcitation = ChannelSqueezeAndSpatialExcitation(
+            in_ch
+        )
 
     def forward(self, x):
-        cse = self.ChannelSqueezeAndExcitation(x)
-        sse = self.SpatialSqueezeAndExcitation(x)
+        cse = self.SqueezeAndExcitation(x)
+        sse = self.ChannelSqueezeAndSpatialExcitation(x)
 
         x = torch.add(cse, sse)
 
         return x
 
 
-class SpatialDropout(nn.Dropout2d):
-    def forward(self, x):
-        x = x.unsqueeze(2)  # (N, T, 1, K)
-        x = x.permute(0, 3, 2, 1)  # (N, K, 1, T)
-        x = super(SpatialDropout, self).forward(
-            x
-        )  # (N, K, 1, T), some features are masked
-        x = x.permute(0, 3, 2, 1)  # (N, T, 1, K)
-        x = x.squeeze(2)  # (N, T, K)
-        return x
-
-
 class GaussianNoise(nn.Module):
-    def __init__(self, stddev):
+    """A gaussian noise module.
+
+    Args:
+        stddev (float): The standard deviation of the normal distribution.
+                        Default: 0.1.
+
+    Shape:
+        - Input: (batch, *)
+        - Output: (batch, *) (same shape as input)
+    """
+
+    def __init__(self, stddev=0.1):
         super(GaussianNoise, self).__init__()
 
         self.stddev = stddev

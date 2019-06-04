@@ -6,36 +6,10 @@ import torch.nn.functional as F
 
 try:
     from itertools import ifilterfalse
-except ImportError:  # py3k
+except ImportError:
     from itertools import filterfalse
 
-# from https://becominghuman.ai/investigating-focal-and-dice-loss-for-the-kaggle-2018-data-science-bowl-65fb9af4f36c
-class FocalLoss(nn.Module):
-    def __init__(self, gamma):
-        super().__init__()
-        self.gamma = gamma
 
-    def forward(self, input, target):
-        if not (target.size() == input.size()):
-            raise ValueError(
-                "Target size ({}) must be the same as input size ({})".format(
-                    target.size(), input.size()
-                )
-            )
-        max_val = (-input).clamp(min=0)
-        loss = (
-            input
-            - input * target
-            + max_val
-            + ((-max_val).exp() + (-input - max_val).exp()).log()
-        )
-        invprobs = F.logsigmoid(-input * (target * 2 - 1))
-        loss = (invprobs * self.gamma).exp() * loss
-
-        return loss.mean()
-
-
-# from https://github.com/bermanmaxim/LovaszSoftmax
 def _mean(l, ignore_nan=False, empty=0):
     """
     nanmean compatible with generators.
@@ -72,7 +46,7 @@ def _lovasz_grad(gt_sorted):
     return jaccard
 
 
-def lovasz_hinge_flat(logits, labels):
+def _lovasz_hinge_flat(logits, labels):
     """
     Binary Lovasz hinge loss
       logits: [P] Variable, logits at each prediction (between -\infty and +\infty)
@@ -107,21 +81,33 @@ def _flatten_binary_scores(scores, labels, ignore=None):
     return vscores, vlabels
 
 
-def lovasz_hinge(logits, labels, per_image=True, ignore=None):
-    """
-    Binary Lovasz hinge loss
-    logits: [B, H, W] Variable, logits at each pixel (between -\infty and +\infty)
-    labels: [B, H, W] Tensor, binary ground truth masks (0 or 1)
-    per_image: compute the loss per image instead of per batch
-    ignore: void class id
+def lovasz_hinge(logits, labels, per_image=True):
+    """The binary Lovasz Hinge loss for semantic segmentation.
+
+    Implementation adapted from https://github.com/bermanmaxim/LovaszSoftmax
+    
+    Args:
+        logits (torch.tensor): Logits at each pixel (between -\infty and +\infty).
+        labels (torch.tensor): Binary ground truth masks (0 or 1).
+        per_image (bool, optional): Compute the loss per image instead of per batch.
+                                    Defaults to True.
+
+    Shape:
+        - Input:
+            - logits: (batch, height, width)
+            - labels: (batch, height, width)
+        - Output: (batch)
+
+    Returns:
+        torch.tensor: The lovasz hinge loss
     """
     if per_image:
         loss = _mean(
-            lovasz_hinge_flat(
-                *_flatten_binary_scores(log.unsqueeze(0), lab.unsqueeze(0), ignore)
+            _lovasz_hinge_flat(
+                *_flatten_binary_scores(log.unsqueeze(0), lab.unsqueeze(0), None)
             )
             for log, lab in zip(logits, labels)
         )
     else:
-        loss = lovasz_hinge_flat(*_flatten_binary_scores(logits, labels, ignore))
+        loss = _lovasz_hinge_flat(*_flatten_binary_scores(logits, labels, None))
     return loss

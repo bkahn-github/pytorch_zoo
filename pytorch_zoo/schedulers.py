@@ -4,10 +4,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 class CyclicMomentum(object):
     """
     Cyclical Momentum
+
+    Pytorch's [cyclical learning rates](https://github.com/pytorch/pytorch/blob/master/torch/optim/lr_scheduler.py), but for momentum, which leads to better results when used with cyclic learning rates, as shown in [A disciplined approach to neural network hyper-parameters: Part 1 -- learning rate, batch size, momentum, and weight decay](https://arxiv.org/abs/1803.09820).
     
     This class has three built-in policies, as put forth in the paper:
     "triangular":

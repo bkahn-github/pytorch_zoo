@@ -1,7 +1,6 @@
 import numpy as np
 
 
-# from: https://www.kaggle.com/aglotero/another-iou-metric
 def _iou(y_true_in, y_pred_in, print_table=False):
     labels = y_true_in
     y_pred = y_pred_in
@@ -63,6 +62,17 @@ def _iou(y_true_in, y_pred_in, print_table=False):
 
 
 def iou(y_true_in, y_pred_in):
+    """Calculates the IOU (intersection over union) score on numpy arrays.
+
+    Implementation adapted from: https://www.kaggle.com/aglotero/another-iou-metric
+    
+    Args:
+        y_true_in (numpy array): Ground truth labels.
+        y_pred_in (numpy array): Predictions from model.
+    
+    Returns:
+        int: Averaged IOU score over predictions.
+    """
     batch_size = y_true_in.shape[0]
     metric = []
     for batch in range(batch_size):
