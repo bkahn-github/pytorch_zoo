@@ -82,7 +82,7 @@ This will start tensorboard, set up a http tunnel, and send you a notification w
 
 ### Loss
 
-[lovasz_hinge(logits, labels, per_image=True)](./pytorch_zoo/loss.py#L84)
+##### [lovasz_hinge(logits, labels, per_image=True)](./pytorch_zoo/loss.py#L84)
 
 The binary Lovasz Hinge loss for semantic segmentation.
 
@@ -103,7 +103,7 @@ _Returns_:
 
 ### Metrics
 
-[iou(y_true_in, y_pred_in)](./pytorch_zoo/metrics.py#L64)
+##### [iou(y_true_in, y_pred_in)](./pytorch_zoo/metrics.py#L64)
 
 Calculates the average IOU (intersection over union) score on thresholds from 0.5 to 0.95 with a step size of 0.05.
 
@@ -116,7 +116,7 @@ _Returns_:
 
 ### Modules
 
-[SqueezeAndExcitation(in_ch, r=16)](./pytorch_zoo/modules.py#L6)
+##### [SqueezeAndExcitation(in_ch, r=16)](./pytorch_zoo/modules.py#L6)
 
 The channel-wise SE (Squeeze and Excitation) block from the [Squeeze-and-Excitation Networks](https://arxiv.org/abs/1709.01507) paper.
 
@@ -129,7 +129,7 @@ _Shape_:
 -   Input: (batch, channels, height, width)
 -   Output: (batch, channels, height, width) (same shape as input)
 
-[ChannelSqueezeAndSpatialExcitation(in_ch)](./pytorch_zoo/modules.py#L41)
+##### [ChannelSqueezeAndSpatialExcitation(in_ch)](./pytorch_zoo/modules.py#L41)
 
 The sSE (Channel Squeeze and Spatial Excitation) block from the [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
 
@@ -141,7 +141,7 @@ _Shape_:
 -   Input: (batch, channels, height, width)
 -   Output: (batch, channels, height, width) (same shape as input)
 
-[ConcurrentSpatialAndChannelSqueezeAndChannelExcitation(in_ch)](./pytorch_zoo/modules.py#L71)
+##### [ConcurrentSpatialAndChannelSqueezeAndChannelExcitation(in_ch)](./pytorch_zoo/modules.py#L71)
 
 The scSE (Concurrent Spatial and Channel Squeeze and Channel Excitation) block from the [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
 
@@ -154,7 +154,7 @@ _Shape_:
 -   Input: (batch, channels, height, width)
 -   Output: (batch, channels, height, width) (same shape as input)
 
-[GaussianNoise(0.1)](./pytorch_zoo/modules.py#L104)
+##### [GaussianNoise(0.1)](./pytorch_zoo/modules.py#L104)
 
 A gaussian noise module.
 
@@ -168,7 +168,7 @@ _Shape_:
 
 ### Schedulers
 
-[CyclicalMomentum(optimizer, base_momentum=0.8, max_momentum=0.9, step_size=2000, mode="triangular")](./pytorch_zoo/schedulers.py#L7)
+##### [CyclicalMomentum(optimizer, base_momentum=0.8, max_momentum=0.9, step_size=2000, mode="triangular")](./pytorch_zoo/schedulers.py#L7)
 
 Pytorch's [cyclical learning rates](https://github.com/pytorch/pytorch/blob/master/torch/optim/lr_scheduler.py), but for momentum, which leads to better results when used with cyclic learning rates, as shown in [A disciplined approach to neural network hyper-parameters: Part 1 -- learning rate, batch size, momentum, and weight decay](https://arxiv.org/abs/1803.09820).
 
@@ -185,7 +185,7 @@ _Arguments_:
 
 ### Utils
 
-[notify({'value1': 'Notification title', 'value2': 'Notification body'})](./pytorch_zoo/utils.py#L13)
+##### [notify({'value1': 'Notification title', 'value2': 'Notification body'})](./pytorch_zoo/utils.py#L13)
 
 Send a notification to your phone with IFTTT
 
@@ -195,14 +195,14 @@ _Arguments_:
 `obj` (Object): Object to send to IFTTT  
 `key` ([type]): IFTTT webhook key
 
-[seed_environment(seed=42)](./pytorch_zoo/utils.py#L25)
+##### [seed_environment(seed=42)](./pytorch_zoo/utils.py#L25)
 
 Set random seeds for python, numpy, and pytorch to ensure reproducible research.
 
 _Arguments_:  
 `seed` (int): The random seed to set.
 
-[gpu_usage(device, digits=4)](./pytorch_zoo/utils.py#L39)
+##### [gpu_usage(device, digits=4)](./pytorch_zoo/utils.py#L39)
 
 Prints the amount of GPU memory currently allocated in GB.
 
@@ -210,7 +210,7 @@ _Arguments_:
 `device` (torch.device, optional): The device you want to check. Defaults to device.  
 `digits` (int, optional): The number of digits of precision. Defaults to 4.
 
-[n_params(model)](./pytorch_zoo/utils.py#L53)
+##### [n_params(model)](./pytorch_zoo/utils.py#L53)
 
 Return the number of parameters in a pytorch model.
 
@@ -220,7 +220,7 @@ _Arguments_:
 _Returns_:  
 (int): The number of parameters in the model.
 
-[save_model(model, fold=0)](./pytorch_zoo/utils.py#L71)
+##### [save_model(model, fold=0)](./pytorch_zoo/utils.py#L71)
 
 Save a trained pytorch model on a particular cross-validation fold to disk.
 
@@ -228,7 +228,7 @@ _Arguments_:
 `model` (nn.Module): The model to save.  
 `fold` (int): The cross-validation fold the model was trained on.
 
-[load_model(model, fold=0)](./pytorch_zoo/utils.py#L84)
+##### [load_model(model, fold=0)](./pytorch_zoo/utils.py#L84)
 
 Load a trained pytorch model saved to disk using `save_model`.
 
@@ -239,7 +239,7 @@ _Arguments_:
 _Returns_:  
 (nn.Module): The same model that was passed in, but with the pretrained weights loaded.
 
-[save(obj, 'obj.pkl')](./pytorch_zoo/utils.py#L99)
+##### [save(obj, 'obj.pkl')](./pytorch_zoo/utils.py#L99)
 
 Save an object to disk.
 
@@ -247,7 +247,7 @@ _Arguments_:
 `obj` (Object): The object to save.  
 `filename` (String): The name of the file to save the object to.
 
-[load('obj.pkl')](./pytorch_zoo/utils.py#L110)
+##### [load('obj.pkl')](./pytorch_zoo/utils.py#L110)
 
 Load an object saved to disk with `save`.
 
@@ -257,7 +257,7 @@ _Arguments_:
 _Returns_:  
 (Object): The loaded object.
 
-[masked_softmax(logits, mask, dim=-1)](./pytorch_zoo/utils.py#L124)
+##### [masked_softmax(logits, mask, dim=-1)](./pytorch_zoo/utils.py#L124)
 
 A masked softmax module to correctly implement attention in Pytorch.
 
@@ -271,7 +271,7 @@ _Arguments_:
 _Returns_:  
 (torch.tensor): The masked softmaxed output
 
-[masked_log_softmax(logits, mask, dim=-1)](./pytorch_zoo/utils.py#L175)
+##### [masked_log_softmax(logits, mask, dim=-1)](./pytorch_zoo/utils.py#L175)
 
 A masked log-softmax module to correctly implement attention in Pytorch.
 
