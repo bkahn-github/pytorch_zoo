@@ -10,6 +10,18 @@ import torch
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
+def notify(obj, key):
+    """Send a notification to your phone with IFTTT
+
+    Setup a IFTTT webhook with https://medium.com/datadriveninvestor/monitor-progress-of-your-training-remotely-f9404d71b720
+    
+    Args:
+        obj (Object): Object to send to IFTTT
+        key ([type]): IFTTT webhook key
+    """
+    requests.post(f"https://maker.ifttt.com/trigger/notify/with/key/{key}", data=obj)
+
+
 def seed_environment(seed):
     """Set random seeds for python, numpy, and pytorch to ensure reproducible research.
     
@@ -24,47 +36,8 @@ def seed_environment(seed):
     torch.backends.cudnn.deterministic = True
 
 
-def notify(obj, key):
-    """Send a notification to your phone with IFTTT
-
-    Setup a IFTTT webhook with https://medium.com/datadriveninvestor/monitor-progress-of-your-training-remotely-f9404d71b720
-    
-    Args:
-        obj (Object): Object to send to IFTTT
-        key ([type]): IFTTT webhook key
-    """
-    requests.post(f'https://maker.ifttt.com/trigger/notify/with/key/{key}', data=obj)
-
-def save_model(model, fold):
-    """Save a trained pytorch model on a particular cross-validation fold to disk. 
-
-    Implementation adapted from https://github.com/floydhub/save-and-resume.
-
-    Args:
-        model (nn.Module): The model to save.
-        fold (int): The cross-validation fold the model was trained on.
-    """
-    filename = f"./checkpoint-{fold}.pt"
-    torch.save(model, filename)
-
-
-def load_model(model, fold):
-    """Load a trained pytorch model saved to disk using `save_model`.
-    
-    Args:
-        model (nn.Module): The model to save.
-        fold (int): Which saved model fold to load.
-    
-    Returns:
-        nn.Module: The same model that was passed in, but with the pretrained weights.
-    """
-    model.load_state_dict(torch.load(f"./checkpoint-{fold}.pt"))
-
-    return model
-
-
 def gpu_usage(device=device, digits=4):
-    """Print the amount of GPU memory currently allocated in GB.
+    """Prints the amount of GPU memory currently allocated in GB.
     
     Args:
         device (torch.device, optional): The device you want to check.
@@ -95,6 +68,34 @@ def n_params(model):
     return pp
 
 
+def save_model(model, fold):
+    """Save a trained pytorch model on a particular cross-validation fold to disk. 
+
+    Implementation adapted from https://github.com/floydhub/save-and-resume.
+
+    Args:
+        model (nn.Module): The model to save.
+        fold (int): The cross-validation fold the model was trained on.
+    """
+    filename = f"./checkpoint-{fold}.pt"
+    torch.save(model, filename)
+
+
+def load_model(model, fold):
+    """Load a trained pytorch model saved to disk using `save_model`.
+    
+    Args:
+        model (nn.Module): The model to save.
+        fold (int): Which saved model fold to load.
+    
+    Returns:
+        nn.Module: The same model that was passed in, but with the pretrained weights loaded.
+    """
+    model.load_state_dict(torch.load(f"./checkpoint-{fold}.pt"))
+
+    return model
+
+
 def save(obj, filename):
     """Save an object to disk.
     
@@ -119,7 +120,6 @@ def load(path):
         obj = pickle.load(handle)
 
     return obj
-
 
 def masked_softmax(vector, mask, dim=-1, memory_efficient=False, mask_fill_value=-1e32):
     """A masked softmax module to correctly implement attention in Pytorch.

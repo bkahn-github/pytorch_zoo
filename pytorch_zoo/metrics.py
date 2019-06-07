@@ -62,7 +62,7 @@ def _iou(y_true_in, y_pred_in, print_table=False):
 
 
 def iou(y_true_in, y_pred_in):
-    """Calculates the IOU (intersection over union) score on numpy arrays.
+    """Calculates the average IOU (intersection over union) score on thresholds from 0.5 to 0.95 with a step size of 0.05.
 
     Implementation adapted from: https://www.kaggle.com/aglotero/another-iou-metric
     
