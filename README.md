@@ -1,9 +1,35 @@
-# Pytorch Zoo
+<h1 align='center'>
+    LOGO </br>
+    Pytorch Zoo
+</h1>
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<h4 align='center'>
+    A collection of useful modules and utilities for kaggle not available in <a href="https://pytorch.org">Pytorch</a>
+</h4>
 
-A collection of useful modules and utilities for kaggle not available in Pytorch
+<p align='center'>
+    <a href="https://forthebadge.com">
+        <img src="https://forthebadge.com/images/badges/made-with-python.svg" alt="forthebadge">
+    </a>
+    <a href="https://github.com/prettier/prettier">
+        <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier" />
+    </a>
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+    </a>
+    <a href="http://makeapullrequest.com">
+        <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
+    </a>
+</p>
+
+<p align='center'>
+    <a href='#overview'>Overview</a> •
+    <a href='#installation'>Installation</a> •
+    <a href='#documentation'>Documentation</a> •
+    <a href='#contributing'>Contributing</a> •
+    <a href='#authors'>Authors</a> •
+    <a href='#license'>License</a>
+</p>
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -322,3 +348,9 @@ This project contains code adapted from:
 -   https://github.com/bckenstler/CLR
 -   https://github.com/floydhub/save-and-resume
 -   https://github.com/allenai/allennlp
+
+This README is based on:
+
+-   https://github.com/mxbi/mlcrate
+-   https://github.com/athityakumar/colorls
+-   https://github.com/amitmerchant1990/electron-markdownify/blob/master/README.md
