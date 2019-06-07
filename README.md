@@ -86,19 +86,19 @@ This will start tensorboard, set up a http tunnel, and send you a notification w
 
 The binary Lovasz Hinge loss for semantic segmentation.
 
-**Arguments**:  
+_Arguments_:  
 `logits` (torch.tensor): Logits at each pixel (between -\infty and +\infty).  
 `labels` (torch.tensor): Binary ground truth masks (0 or 1).  
 `per_image` (bool, optional): Compute the loss per image instead of per batch. Defaults to True.
 
-**Shape**:
+_Shape_:
 
 -   Input:
     -   logits: (batch, height, width)
     -   labels: (batch, height, width)
 -   Output: (batch)
 
-**Returns**:  
+_Returns_:  
 (torch.tensor): The lovasz hinge loss
 
 ### Metrics
@@ -107,11 +107,11 @@ The binary Lovasz Hinge loss for semantic segmentation.
 
 Calculates the average IOU (intersection over union) score on thresholds from 0.5 to 0.95 with a step size of 0.05.
 
-**Arguments**:  
+_Arguments_:  
 `y_true_in` (numpy array): Ground truth labels.  
 `y_pred_in` (numpy array): Predictions from model.
 
-**Returns**:  
+_Returns_:  
 (int): Averaged IOU score over predictions.
 
 ### Modules
@@ -120,11 +120,11 @@ Calculates the average IOU (intersection over union) score on thresholds from 0.
 
 The channel-wise SE (Squeeze and Excitation) block from the [Squeeze-and-Excitation Networks](https://arxiv.org/abs/1709.01507) paper.
 
-**Arguments**:  
+_Arguments_:  
 `in_ch` (int): The number of channels in the feature map of the input.  
 `r` (int): The reduction ratio of the intermidiate channels. Default: 16.
 
-**Shape**:
+_Shape_:
 
 -   Input: (batch, channels, height, width)
 -   Output: (batch, channels, height, width) (same shape as input)
@@ -133,10 +133,10 @@ The channel-wise SE (Squeeze and Excitation) block from the [Squeeze-and-Excitat
 
 The sSE (Channel Squeeze and Spatial Excitation) block from the [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
 
-**Arguments**:  
+_Arguments_:  
 `in_ch` (int): The number of channels in the feature map of the input.
 
-**Shape**:
+_Shape_:
 
 -   Input: (batch, channels, height, width)
 -   Output: (batch, channels, height, width) (same shape as input)
@@ -145,11 +145,11 @@ The sSE (Channel Squeeze and Spatial Excitation) block from the [Concurrent Spat
 
 The scSE (Concurrent Spatial and Channel Squeeze and Channel Excitation) block from the [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
 
-**Arguments**:  
+_Arguments_:  
 `in_ch` (int): The number of channels in the feature map of the input.  
 `r` (int): The reduction ratio of the intermidiate channels. Default: 16.
 
-**Shape**:
+_Shape_:
 
 -   Input: (batch, channels, height, width)
 -   Output: (batch, channels, height, width) (same shape as input)
@@ -158,10 +158,10 @@ The scSE (Concurrent Spatial and Channel Squeeze and Channel Excitation) block f
 
 A gaussian noise module.
 
-**Arguments**:  
+_Arguments_:  
 `stddev` (float): The standard deviation of the normal distribution. Default: 0.1.
 
-**Shape**:
+_Shape_:
 
 -   Input: (batch, \*)
 -   Output: (batch, \*) (same shape as input)
@@ -172,7 +172,7 @@ A gaussian noise module.
 
 Pytorch's [cyclical learning rates](https://github.com/pytorch/pytorch/blob/master/torch/optim/lr_scheduler.py), but for momentum, which leads to better results when used with cyclic learning rates, as shown in [A disciplined approach to neural network hyper-parameters: Part 1 -- learning rate, batch size, momentum, and weight decay](https://arxiv.org/abs/1803.09820).
 
-**Arguments**:  
+_Arguments_:  
  `optimizer` (Optimizer): Wrapped optimizer.  
 `base_momentum` (float or list): Initial momentum which is the lower boundary in the cycle for each param groups. Default: 0.8  
 `max_momentum` (float or list): Upper boundaries in the cycle for each parameter group. scaling function. Default: 0.9  
@@ -191,7 +191,7 @@ Send a notification to your phone with IFTTT
 
 Setup a IFTTT webhook with https://medium.com/datadriveninvestor/monitor-progress-of-your-training-remotely-f9404d71b720
 
-**Arguments**:  
+_Arguments_:  
 `obj` (Object): Object to send to IFTTT  
 `key` ([type]): IFTTT webhook key
 
@@ -199,14 +199,14 @@ Setup a IFTTT webhook with https://medium.com/datadriveninvestor/monitor-progres
 
 Set random seeds for python, numpy, and pytorch to ensure reproducible research.
 
-**Arguments**:  
+_Arguments_:  
 `seed` (int): The random seed to set.
 
 [gpu_usage(device, digits=4)](./pytorch_zoo/utils.py#L39)
 
 Prints the amount of GPU memory currently allocated in GB.
 
-**Arguments**:
+_Arguments_:
 `device` (torch.device, optional): The device you want to check. Defaults to device.  
 `digits` (int, optional): The number of digits of precision. Defaults to 4.
 
@@ -214,17 +214,17 @@ Prints the amount of GPU memory currently allocated in GB.
 
 Return the number of parameters in a pytorch model.
 
-**Arguments**:  
+_Arguments_:  
 `model` (nn.Module): The model to analyze.
 
-**Returns**:  
+_Returns_:  
 (int): The number of parameters in the model.
 
 [save_model(model, fold=0)](./pytorch_zoo/utils.py#L71)
 
 Save a trained pytorch model on a particular cross-validation fold to disk.
 
-**Arguments**:  
+_Arguments_:  
 `model` (nn.Module): The model to save.  
 `fold` (int): The cross-validation fold the model was trained on.
 
@@ -232,18 +232,18 @@ Save a trained pytorch model on a particular cross-validation fold to disk.
 
 Load a trained pytorch model saved to disk using `save_model`.
 
-**Arguments**:  
+_Arguments_:  
 `model` (nn.Module): The model to save.  
 `fold` (int): Which saved model fold to load.
 
-**Returns**:  
+_Returns_:  
 (nn.Module): The same model that was passed in, but with the pretrained weights loaded.
 
 [save(obj, 'obj.pkl')](./pytorch_zoo/utils.py#L99)
 
 Save an object to disk.
 
-**Arguments**:  
+_Arguments_:  
 `obj` (Object): The object to save.  
 `filename` (String): The name of the file to save the object to.
 
@@ -251,36 +251,36 @@ Save an object to disk.
 
 Load an object saved to disk with `save`.
 
-**Arguments**:  
+_Arguments_:  
 `path` (String): The path to the saved object.
 
-**Returns**:  
+_Returns_:  
 (Object): The loaded object.
 
 [masked_softmax(logits, mask, dim=-1)](./pytorch_zoo/utils.py#L124)
 
 A masked softmax module to correctly implement attention in Pytorch.
 
-**Arguments**:  
+_Arguments_:  
 `vector` (torch.tensor): The tensor to softmax.  
 `mask` (torch.tensor): The tensor to indicate which indices are to be masked and not included in the softmax operation.  
 `dim` (int, optional): The dimension to softmax over. Defaults to -1.  
 `memory_efficient` (bool, optional): Whether to use a less precise, but more memory efficient implementation of masked softmax. Defaults to False.  
 `mask_fill_value` ([type], optional): The value to fill masked values with if `memory_efficient` is `True`. Defaults to -1e32.
 
-**Returns**:  
+_Returns_:  
 (torch.tensor): The masked softmaxed output
 
 [masked_log_softmax(logits, mask, dim=-1)](./pytorch_zoo/utils.py#L175)
 
 A masked log-softmax module to correctly implement attention in Pytorch.
 
-**Arguments**:  
+_Arguments_:  
 `vector` (torch.tensor): The tensor to log-softmax.  
 `mask` (torch.tensor): The tensor to indicate which indices are to be masked and not included in the log-softmax operation.  
 `dim` (int, optional): The dimension to log-softmax over. Defaults to -1.
 
-**Returns**:  
+_Returns_:  
 (torch.tensor): The masked log-softmaxed output
 
 ## Contributing
@@ -289,7 +289,7 @@ This repository is still a work in progress, so if you find a bug, think there i
 
 ## Authors
 
--   **Bilal Khan** - _Initial work_
+-   _Bilal Khan_ - _Initial work_
 
 ## License
 
