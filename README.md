@@ -43,38 +43,42 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
--   [Overview](#overview)
--   [Installation](#installation)
--   [Documentation](#documentation)
-    -   [Notifications](#notifications)
-        -   [Sending yourself notifications when your models finish training](#sending-yourself-notifications-when-your-models-finish-training)
-        -   [Viewing training progress with tensorboard in a kaggle kernel](#viewing-training-progress-with-tensorboard-in-a-kaggle-kernel)
-    -   [Loss](#loss)
-        -   [lovasz_hinge(logits, labels, per_image=True)](#lovasz_hingelogits-labels-per_imagetrue)
-    -   [Metrics](#metrics)
-        -   [iou(y_true_in, y_pred_in)](#iouy_true_in-y_pred_in)
-    -   [Modules](#modules)
-        -   [SqueezeAndExcitation(in_ch, r=16)](#squeezeandexcitationin_ch-r16)
-        -   [ChannelSqueezeAndSpatialExcitation(in_ch)](#channelsqueezeandspatialexcitationin_ch)
-        -   [ConcurrentSpatialAndChannelSqueezeAndChannelExcitation(in_ch)](#concurrentspatialandchannelsqueezeandchannelexcitationin_ch)
-        -   [GaussianNoise(0.1)](#gaussiannoise01)
-    -   [Schedulers](#schedulers)
-        -   [CyclicalMomentum(optimizer, base_momentum=0.8, max_momentum=0.9, step_size=2000, mode="triangular")](#cyclicalmomentumoptimizer-base_momentum08-max_momentum09-step_size2000-modetriangular)
-    -   [Utils](#utils)
-        -   [notify({'value1': 'Notification title', 'value2': 'Notification body'})](#notifyvalue1-notification-title-value2-notification-body)
-        -   [seed_environment(seed=42)](#seed_environmentseed42)
-        -   [gpu_usage(device, digits=4)](#gpu_usagedevice-digits4)
-        -   [n_params(model)](#n_paramsmodel)
-        -   [save_model(model, fold=0)](#save_modelmodel-fold0)
-        -   [load_model(model, fold=0)](#load_modelmodel-fold0)
-        -   [save(obj, 'obj.pkl')](#saveobj-objpkl)
-        -   [load('obj.pkl')](#loadobjpkl)
-        -   [masked_softmax(logits, mask, dim=-1)](#masked_softmaxlogits-mask-dim-1)
-        -   [masked_log_softmax(logits, mask, dim=-1)](#masked_log_softmaxlogits-mask-dim-1)
--   [Contributing](#contributing)
--   [Authors](#authors)
--   [License](#license)
--   [Acknowledgements](#acknowledgements)
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Documentation](#documentation)
+  - [Notifications](#notifications)
+    - [Sending yourself notifications when your models finish training](#sending-yourself-notifications-when-your-models-finish-training)
+    - [Viewing training progress with tensorboard in a kaggle kernel](#viewing-training-progress-with-tensorboard-in-a-kaggle-kernel)
+  - [Data](#data)
+      - [DynamicSampler(sampler, batch_size=32)](#dynamicsamplersampler-batch_size32)
+      - [trim_tensors(tensors)](#trim_tensorstensors)
+  - [Loss](#loss)
+      - [lovasz_hinge(logits, labels, per_image=True)](#lovasz_hingelogits-labels-per_imagetrue)
+  - [Metrics](#metrics)
+      - [iou(y_true_in, y_pred_in)](#iouy_true_in-y_pred_in)
+  - [Modules](#modules)
+      - [SqueezeAndExcitation(in_ch, r=16)](#squeezeandexcitationin_ch-r16)
+      - [ChannelSqueezeAndSpatialExcitation(in_ch)](#channelsqueezeandspatialexcitationin_ch)
+      - [ConcurrentSpatialAndChannelSqueezeAndChannelExcitation(in_ch)](#concurrentspatialandchannelsqueezeandchannelexcitationin_ch)
+      - [GaussianNoise(0.1)](#gaussiannoise01)
+  - [Schedulers](#schedulers)
+      - [CyclicalMomentum(optimizer, base_momentum=0.8, max_momentum=0.9, step_size=2000, mode="triangular")](#cyclicalmomentumoptimizer-base_momentum08-max_momentum09-step_size2000-modetriangular)
+  - [Utils](#utils)
+      - [notify({'value1': 'Notification title', 'value2': 'Notification body'}, key)](#notifyvalue1-notification-title-value2-notification-body-key)
+      - [seed_environment(seed=42)](#seed_environmentseed42)
+      - [gpu_usage(device, digits=4)](#gpu_usagedevice-digits4)
+      - [n_params(model)](#n_paramsmodel)
+      - [save_model(model, fold=0)](#save_modelmodel-fold0)
+      - [load_model(model, fold=0)](#load_modelmodel-fold0)
+      - [save(obj, 'obj.pkl')](#saveobj-objpkl)
+      - [load('obj.pkl')](#loadobjpkl)
+      - [masked_softmax(logits, mask, dim=-1)](#masked_softmaxlogits-mask-dim-1)
+      - [masked_log_softmax(logits, mask, dim=-1)](#masked_log_softmaxlogits-mask-dim-1)
+- [Contributing](#contributing)
+- [Authors](#authors)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -137,6 +141,51 @@ notify(obj, [YOUR_SECRET_KEY_HERE])
 ```
 
 This will start tensorboard, set up a http tunnel, and send you a notification with a url where you can access tensorboard.
+
+### Data
+
+##### [DynamicSampler(sampler, batch_size=32)](./pytorch_zoo/data.py#L4)
+
+A dynamic batch length data sampler. To be used with `trim_tensors`.
+
+```python
+train_dataset = data.TensorDataset(data)
+sampler = data.RandomSampler(train_dataset)
+sampler = DynamicSampler(sampler, batch_size=32, drop_last=False)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_sampler=len_sampler)
+
+for epoch in range(10):
+    for batch in train_loader:
+        batch = trim_tensors(batch)
+        train_batch(...)
+```
+
+_Arguments_:  
+`sampler` (torch.utils.data.Sampler): Base sampler.  
+`batch_size` (int): Size of minibatch.  
+`drop_last` (bool): If `True`, the sampler will drop the last batch if its size would be less than `batch_size`.
+
+##### [trim_tensors(tensors)](./pytorch_zoo/data.py#L48)
+
+Trim padding off of a batch of tensors to the smallest possible length. To be used with `DynamicSampler`.
+
+```python
+train_dataset = data.TensorDataset(data)
+sampler = data.RandomSampler(train_dataset)
+sampler = DynamicSampler(sampler, batch_size=32, drop_last=False)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_sampler=len_sampler)
+
+for epoch in range(10):
+    for batch in train_loader:
+        batch = trim_tensors(batch)
+        train_batch(...)
+```
+
+_Arguments_:  
+`tensors` ([torch.tensor]): list of tensors to trim.
+
+_Returns_:  
+([torch.tensor]): list of trimmed tensors.
 
 ### Loss
 

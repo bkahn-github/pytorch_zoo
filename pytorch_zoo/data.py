@@ -1,8 +1,8 @@
 import torch
 from torch.utils import data
 
-class LenMatchBatchSampler(data.BatchSampler):
-    """A dynamic batch length data sampler
+class DynamicSampler(data.BatchSampler):
+    """A dynamic batch length data sampler. To be used with `trim_tensors`.
 
     Implementation adapted from https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/discussion/94779 and https://github.com/pytorch/pytorch/blob/master/torch/utils/data/sampler.py
 
@@ -46,7 +46,7 @@ class LenMatchBatchSampler(data.BatchSampler):
         assert len(self) == yielded, "produced an inccorect number of batches. expected %i, but yielded %i" %(len(self), yielded)
 
 def trim_tensors(tensors):
-    """Trim padding off of a batch of tensors to the smallest possible length
+    """Trim padding off of a batch of tensors to the smallest possible length. To be used with `DynamicSampler`.
 
     Implementation adapted from https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/discussion/94779
 
