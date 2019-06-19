@@ -302,7 +302,8 @@ A gaussian noise module.
 self.gaussian_noise = GaussianNoise(0.1)
 
 # in forward()
-x = self.gaussian_noise(x)
+if self.training:
+    x = self.gaussian_noise(x)
 ```
 
 _Arguments_:  
