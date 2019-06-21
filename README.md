@@ -147,6 +147,8 @@ This will start tensorboard, set up a http tunnel, and send you a notification w
 
 A dynamic batch length data sampler. To be used with `trim_tensors`.
 
+Implementation adapted from https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/discussion/94779 and https://github.com/pytorch/pytorch/blob/master/torch/utils/data/sampler.py
+
 ```python
 train_dataset = data.TensorDataset(data)
 sampler = data.RandomSampler(train_dataset)
@@ -167,6 +169,8 @@ _Arguments_:
 ##### [trim_tensors(tensors)](./pytorch_zoo/data.py#L48)
 
 Trim padding off of a batch of tensors to the smallest possible length. To be used with `DynamicSampler`.
+
+Implementation adapted from https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/discussion/94779
 
 ```python
 train_dataset = data.TensorDataset(data)
@@ -191,6 +195,8 @@ _Returns_:
 ##### [lovasz_hinge(logits, labels, per_image=True)](./pytorch_zoo/loss.py#L84)
 
 The binary Lovasz Hinge loss for semantic segmentation.
+
+Implementation adapted from https://github.com/bermanmaxim/LovaszSoftmax
 
 ```python
 loss = lovasz_hinge(logits, labels)
@@ -217,6 +223,8 @@ _Returns_:
 
 Calculates the average IOU (intersection over union) score on thresholds from 0.5 to 0.95 with a step size of 0.05.
 
+Implementation adapted from: https://www.kaggle.com/aglotero/another-iou-metric
+
 ```python
 val_iou = iou(y_val, val_preds)
 ```
@@ -233,6 +241,8 @@ _Returns_:
 ##### [SqueezeAndExcitation(in_ch, r=16)](./pytorch_zoo/modules.py#L6)
 
 The channel-wise SE (Squeeze and Excitation) block from the [Squeeze-and-Excitation Networks](https://arxiv.org/abs/1709.01507) paper.
+
+Implementation adapted from https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/65939 and https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/66178
 
 ```python
 # in __init__()
@@ -255,6 +265,8 @@ _Shape_:
 
 The sSE (Channel Squeeze and Spatial Excitation) block from the [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
 
+Implementation adapted from https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/66178
+
 ```python
 # in __init__()
 self.sSE = ChannelSqueezeAndSpatialExcitation(in_ch)
@@ -274,6 +286,8 @@ _Shape_:
 ##### [ConcurrentSpatialAndChannelSqueezeAndChannelExcitation(in_ch)](./pytorch_zoo/modules.py#L71)
 
 The scSE (Concurrent Spatial and Channel Squeeze and Channel Excitation) block from the [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://arxiv.org/abs/1803.02579) paper.
+
+Implementation adapted from https://www.kaggle.com/c/tgs-salt-identification-challenge/discussion/66178
 
 ```python
 # in __init__()
@@ -397,6 +411,8 @@ _Returns_:
 
 Save a trained pytorch model on a particular cross-validation fold to disk.
 
+Implementation adapted from https://github.com/floydhub/save-and-resume.
+
 ```python
 save_model(model, fold=0)
 ```
@@ -450,6 +466,8 @@ _Returns_:
 
 A masked softmax module to correctly implement attention in Pytorch.
 
+Implementation adapted from: https://github.com/allenai/allennlp/blob/master/allennlp/nn/util.py
+
 ```python
 out = masked_softmax(logits, mask, dim=-1)
 ```
@@ -468,6 +486,8 @@ _Returns_:
 
 A masked log-softmax module to correctly implement attention in Pytorch.
 
+Implementation adapted from: https://github.com/allenai/allennlp/blob/master/allennlp/nn/util.py
+
 ```python
 out = masked_log_softmax(logits, mask, dim=-1)
 ```
@@ -482,7 +502,7 @@ _Returns_:
 
 ## Contributing
 
-This repository is still a work in progress, so if you find a bug, think there is something missing, or have any suggestions for new features or modules, feel free to open an issue or a pull request
+This repository is still a work in progress, so if you find a bug, think there is something missing, or have any suggestions for new features or modules, feel free to open an issue or a pull request. Feel free to use the library or code from it in your own projects, and if you feel that some code used in this project hasn't been properly accredited, please open an issue.
 
 ## Authors
 
