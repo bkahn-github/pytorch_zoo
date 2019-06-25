@@ -43,7 +43,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
--   [Overview](#overview)
 -   [Installation](#installation)
 -   [Documentation](#documentation)
     -   [Notifications](#notifications)
@@ -81,14 +80,18 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Overview
-
 ## Installation
 
 pytorch_zoo can be installed from pip
 
 ```
 pip install pytorch_zoo
+```
+
+or if using a kaggle kernel without an internet connection, add the pytorch_zoo [dataset](https://www.kaggle.com/bkkaggle/pytorch-zoo) and run
+
+```python
+!pip install ../input/repository/bkahn-github-pytorch_zoo-0d7aa7b/
 ```
 
 ## Documentation
