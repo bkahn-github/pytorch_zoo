@@ -10,6 +10,12 @@
     <a href="https://forthebadge.com">
         <img src="https://forthebadge.com/images/badges/made-with-python.svg" alt="forthebadge">
     </a>
+    <a href="https://lgtm.com/projects/g/bkkaggle/pytorch_zoo/context:python">
+        <img alt="Language grade: Python" src="https://img.shields.io/lgtm/grade/python/g/bkkaggle/pytorch_zoo.svg?logo=lgtm&logoWidth=18"/>
+    </a>
+    <a href="https://lgtm.com/projects/g/bkkaggle/pytorch_zoo/alerts/">
+        <img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/bkkaggle/pytorch_zoo.svg?logo=lgtm&logoWidth=18"/>
+    </a>
     <a href="https://github.com/prettier/prettier">
         <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier" />
     </a>
@@ -19,14 +25,14 @@
     <a href="http://makeapullrequest.com">
         <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
     </a>
-    <a href="https://github.com/bkahn-github/pytorch_zoo/issues">
-        <img alt="GitHub issues" src="https://img.shields.io/github/issues/bkahn-github/pytorch_zoo.svg?style=flat">
+    <a href="https://github.com/bkkaggle/pytorch_zoo/issues">
+        <img alt="GitHub issues" src="https://img.shields.io/github/issues/bkkaggle/pytorch_zoo.svg?style=flat">
     </a>
-    <a href="https://github.com/bkahn-github/pytorch_zoo/pulls">
-        <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/bkahn-github/pytorch_zoo.svg">
+    <a href="https://github.com/bkkaggle/pytorch_zoo/pulls">
+        <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/bkkaggle/pytorch_zoo.svg">
     </a>
-    <a href="https://github.com/bkahn-github/pytorch_zoo/issues">
-        <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/bkahn-github/pytorch_zoo.svg">
+    <a href="https://github.com/bkkaggle/pytorch_zoo/issues">
+        <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/bkkaggle/pytorch_zoo.svg">
     </a>
 
 </p>
@@ -91,7 +97,7 @@ pip install pytorch_zoo
 or if using a kaggle kernel without an internet connection, add the pytorch_zoo [dataset](https://www.kaggle.com/bkkaggle/pytorch-zoo) and run
 
 ```python
-!pip install ../input/repository/bkahn-github-pytorch_zoo-0d7aa7b/
+!pip install ../input/repository/bkkaggle-pytorch_zoo-0d7aa7b/
 ```
 
 ## Documentation
