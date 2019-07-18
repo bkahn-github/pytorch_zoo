@@ -78,7 +78,7 @@ def save_model(model, fold):
         fold (int): The cross-validation fold the model was trained on.
     """
     filename = f"./checkpoint-{fold}.pt"
-    torch.save(model, filename)
+    torch.save(model.state_dict(), filename)
 
 
 def load_model(model, fold):
