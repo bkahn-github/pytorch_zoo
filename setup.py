@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pytorch_zoo",
-    version="1.1.1",
+    version="1.1.2",
     author="Bilal Khan",
     author_email="bk@tinymanager.com",
     description="A collection of useful modules and utilities for kaggle not available in Pytorch",
