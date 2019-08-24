@@ -226,24 +226,28 @@ _Shape_:
 _Returns_:  
 (torch.tensor): The lovasz hinge loss
 
-### Metrics
+##### [DiceLoss()](./pytorch_zoo/loss.py#L115)
 
-##### [iou(y_true_in, y_pred_in)](./pytorch_zoo/metrics.py#L64)
+The dice loss for semantic segmentation
 
-Calculates the average IOU (intersection over union) score on thresholds from 0.5 to 0.95 with a step size of 0.05.
-
-Implementation adapted from: https://www.kaggle.com/aglotero/another-iou-metric
+Implementation adapted from https://www.kaggle.com/soulmachine/siim-deeplabv3
 
 ```python
-val_iou = iou(y_val, val_preds)
+criterion = DiceLoss()
+loss = criterion(logits, targets)
 ```
 
-_Arguments_:  
-`y_true_in` (numpy array): Ground truth labels.  
-`y_pred_in` (numpy array): Predictions from model.
+_Shape_:
+
+-   Input:
+    -   logits: (batch, \*)
+    -   targets: (batch, \*) _same as logits_
+-   Output: (1)
 
 _Returns_:  
-(int): Averaged IOU score over predictions.
+(torch.tensor): The dice loss
+
+### Metrics
 
 ### Modules
 
