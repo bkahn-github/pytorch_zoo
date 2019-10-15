@@ -46,6 +46,12 @@
     <a href='#license'>License</a>
 </p>
 
+<div>
+    <img src="./screenshot.png" />
+</div>
+
+<p align='center'><strong>Made by <a href='https://github.com/bkkaggle'>Bilal Khan</a> • https://bilal.software</strong></p>
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -542,7 +548,4 @@ This README is based on:
 -   https://github.com/mxbi/mlcrate
 -   https://github.com/athityakumar/colorls
 -   https://github.com/amitmerchant1990/electron-markdownify/blob/master/README.md
-
-```
-
-```
+-   https://github.com/rish-16/gpt2client
