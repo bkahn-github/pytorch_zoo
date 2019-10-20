@@ -3,7 +3,7 @@
 </h1>
 
 <h4 align='center'>
-    A collection of useful modules and utilities for kaggle not available in <a href="https://pytorch.org">Pytorch</a>
+    A collection of useful modules and utilities (especially helpful for kaggling) not available in <a href="https://pytorch.org">Pytorch</a>
 </h4>
 
 <p align='center'>
@@ -43,7 +43,8 @@
     <a href='#documentation'>Documentation</a> •
     <a href='#contributing'>Contributing</a> •
     <a href='#authors'>Authors</a> •
-    <a href='#license'>License</a>
+    <a href='#license'>License</a> •
+    <a href='#acknowledgements'>Acknowledgements</a>
 </p>
 
 <div>
@@ -98,12 +99,6 @@ pytorch_zoo can be installed from pip
 
 ```
 pip install pytorch_zoo
-```
-
-or if using a kaggle kernel without an internet connection, add the pytorch_zoo [dataset](https://www.kaggle.com/bkkaggle/pytorch-zoo) and run
-
-```python
-!pip install ../input/repository/bkkaggle-pytorch_zoo-0d7aa7b/
 ```
 
 ## Documentation
