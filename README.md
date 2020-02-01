@@ -3,7 +3,7 @@
 </h1>
 
 <h4 align='center'>
-    A collection of useful modules and utilities (especially helpful for kaggling) not available in <a href="https://pytorch.org">Pytorch</a>
+    A collection of useful modules and utilities (especially helpful for kaggle) not available in <a href="https://pytorch.org">Pytorch</a>
 </h4>
 
 <p align='center'>
